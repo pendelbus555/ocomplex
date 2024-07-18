@@ -1,5 +1,14 @@
-from django.shortcuts import render
+from django.shortcuts import render, HttpResponseRedirect
+from .forms import CityForm
 
 
 def index(request):
-    return render(request, 'myapp/index.html')
+    if request.method == "POST":
+        form = CityForm(request.POST)
+        if form.is_valid():
+            return HttpResponseRedirect("/thanks/")
+
+    else:
+        form = CityForm()
+
+    return render(request, "myapp/index.html", {"form": form})
