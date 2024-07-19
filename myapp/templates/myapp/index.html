@@ -20,6 +20,15 @@
       <div class="col-4 text-center">
         <form method="post">
           {% csrf_token %} {{ form }}
+          {% if last_city %}
+          <div>
+            <small>
+              Maybe you want to search
+              <a href="" id="cityLink" data-value="{{ last_city }}">{{ last_city }}</a>
+              ?
+            </small>
+          </div>
+          {% endif %}
           <input type="submit" value="Show weather" class="btn btn-primary mt-3" />
         </form>
       </div>
@@ -70,6 +79,30 @@
       </div>
     </div>
   </div>
+
+  <script>
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const link = document.getElementById('cityLink');
+
+      if (link) {
+        link.addEventListener('click', event => {
+          event.preventDefault();
+
+          const value = link.getAttribute('data-value');
+
+          const inputField = document.getElementById('id_city_name');
+
+          if (inputField) {
+            inputField.value = value;
+          }
+        });
+      }
+    });
+
+  </script>
+
+
 </body>
 
 </html>
